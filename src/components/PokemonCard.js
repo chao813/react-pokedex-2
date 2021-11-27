@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 //import Checkbox from './Checkbox';
 import PokemonIcon from "./PokemonIcon";
-import { useContext } from "react";
-import { PokemonContext } from "../context/PokemonContext";
 
 const PokemonCard = ({ pokemon, name, index, captured, toggleCaptured }) => {
   function clickedCapture() {

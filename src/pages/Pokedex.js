@@ -4,39 +4,37 @@ import { useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
 
 const Pokedex = () => {
-  const [pokemons, setPokemons] = useState([]);
   const [captured, setCaptured] = useState([]);
-  const URL = "https://pokeapi.co/api/v2/pokemon/?limit=5";
-  const [capturedPokemonCards, setCapturedPokemonCards] = useState();
-  const [notCapturedPokemonCards, setNotCapturedPokemonCards] = useState();
-  const pokCardURL = pokemons.map((pokemon) => pokemon.url);
+  const {
+    pokemons,
+    setPokemons,
+    capturedPokemonCards,
+    setCapturedPokemonCards,
+    notCapturedPokemonCards,
+    setNotCapturedPokemonCards,
+  } = useContext(PokemonContext);
 
   const fetchingPokemons = async () => {
-    const res = await fetch(URL);
-    const data = await res.json();
-    setPokemons(data.results);
-    //setCaptured([false, false, false, false, false]);
-    setCaptured(new Array(data.results.length).fill(false));
+    setCaptured(new Array(pokemons.length).fill(false));
   };
 
   useEffect(() => {
     fetchingPokemons();
-  }, [URL]);
+  }, [pokemons]);
 
   useEffect(() => {
     console.log(captured);
     let capturedPkm = [];
     let notCapturedPkm = [];
     captured.forEach((cap, index) => {
-        if(cap == true){
-            capturedPkm.push(pokemons[index]);
-        }
-        else {
-            notCapturedPkm.push(pokemons[index]);
-        }
+      if (cap == true) {
+        capturedPkm.push(pokemons[index]);
+      } else {
+        notCapturedPkm.push(pokemons[index]);
+      }
     });
-    setCapturedPokemonCards(capturedPkm); 
-    setNotCapturedPokemonCards(notCapturedPkm); 
+    setCapturedPokemonCards(capturedPkm);
+    setNotCapturedPokemonCards(notCapturedPkm);
   }, [captured]);
 
   return (
