@@ -17,12 +17,33 @@ function App() {
   const fetchingPokemons = async () => {
     const res = await fetch(URL);
     const data = await res.json();
-    setPokemons(data.results);
+    var allPokemonInfo = [];
+
+    data.results.forEach(async poke => {
+      let pokemonDetailsResults = await fetch(poke.url).then(res => res.json());
+      poke = {...poke, ...pokemonDetailsResults}
+      allPokemonInfo.push(poke);
+      setPokemons([...allPokemonInfo]);
+    });
   };
 
   useEffect(() => {
     fetchingPokemons();
   }, [URL]);
+
+  // const fetchingPokemonCard = async () => {
+  //   //const res = await fetch(pokCardURL);
+  //   const res = await Promise.all(pokCardURL.map(url => fetch(url).then((res)=> res.json())));
+    
+  //   console.log(res)
+    
+  //   setPokemonCard(res)
+  //   }
+    
+  //   useEffect(() => {
+  //   fetchingPokemonCard()
+    
+  //   }, [pokCardURL])
 
   const providerValue = {
     pokemons,

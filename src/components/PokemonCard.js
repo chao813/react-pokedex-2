@@ -10,6 +10,8 @@ const PokemonCard = ({ pokemon, name, index, captured, toggleCaptured }) => {
     toggleCaptured(items);
   }
 
+  var currentPokemonCaptured = captured[index];
+
   return (
     <>
       <div
@@ -25,6 +27,7 @@ const PokemonCard = ({ pokemon, name, index, captured, toggleCaptured }) => {
         <Link
           to={{ pathname: `/pokemon/${pokemon.id}` }}
           style={{ textDecoration: "none", color: "#000000" }}
+          state={{ pokemon: pokemon, currentPokemonCaptured }}
         >
           <div
             style={{
